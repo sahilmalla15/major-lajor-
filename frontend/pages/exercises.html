@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercises — AtelierAI</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="main-with-sidebar">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="../index.html" class="sidebar-brand">
+                <i class="fas fa-paint-brush"></i> AtelierAI
+            </a>
+        </div>
+        <div class="sidebar-section">
+            <span class="sidebar-section-title">Menu</span>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html" class="sidebar-link"><i class="fas fa-chart-bar"></i> Dashboard</a></li>
+                <li><a href="mentor.html" class="sidebar-link"><i class="fas fa-robot"></i> AI Mentor</a></li>
+                <li><a href="roadmap.html" class="sidebar-link"><i class="fas fa-map"></i> Learning Roadmap</a></li>
+                <li><a href="exercises.html" class="sidebar-link active"><i class="fas fa-pen-fancy"></i> Exercises</a></li>
+                <li><a href="progress.html" class="sidebar-link"><i class="fas fa-chart-line"></i> Progress</a></li>
+                <li><a href="drawing-lab.html" class="sidebar-link"><i class="fas fa-palette"></i> Drawing Lab</a></li>
+                <li><a href="profile.html" class="sidebar-link"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-with-sidebar">
+        <div class="page-header">
+            <h1 class="page-title">Practice Exercises</h1>
+        </div>
+
+        <!-- Loading indicator -->
+        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i> Loading exercises...
+        </div>
+
+        <!-- Error message -->
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label for="categoryFilter">Category</label>
+                <select id="categoryFilter" class="form-input filter-input">
+                    <option value="all">All Categories</option>
+                    <option value="perspective">Perspective</option>
+                    <option value="anatomy">Anatomy</option>
+                    <option value="shading">Shading</option>
+                    <option value="composition">Composition</option>
+                    <option value="line-work">Line Work</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="difficultyFilter">Difficulty</label>
+                <select id="difficultyFilter" class="form-input filter-input">
+                    <option value="all">All Levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+            </div>
+            <button id="applyFiltersBtn" class="btn btn-primary">Apply</button>
+        </div>
+
+        <!-- Exercises Grid -->
+        <div class="exercises-grid" id="exercisesGrid">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- Exercise Detail Modal -->
+        <div id="exerciseModal" class="modal" style="display: none;">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalExerciseTitle">Exercise Title</h2>
+                    <button class="modal-close" id="exerciseModalClose">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="exercise-meta">
+                        <span class="badge" id="modalExerciseDifficulty">Beginner</span>
+                        <span class="exercise-category" id="modalExerciseCategory">Category</span>
+                    </div>
+                    <p id="modalExerciseDescription">Description goes here.</p>
+                    <div id="modalExerciseInstructions">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="exerciseModalCancel">Close</button>
+                    <button class="btn btn-primary" id="startExerciseBtn">Start Exercise</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/pages/exercises.js"></script>
+</body>
+</html>

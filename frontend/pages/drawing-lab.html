@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Lab — AtelierAI</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="main-with-sidebar">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="../index.html" class="sidebar-brand">
+                <i class="fas fa-paint-brush"></i> AtelierAI
+            </a>
+        </div>
+        <div class="sidebar-section">
+            <span class="sidebar-section-title">Menu</span>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html" class="sidebar-link"><i class="fas fa-chart-bar"></i> Dashboard</a></li>
+                <li><a href="mentor.html" class="sidebar-link"><i class="fas fa-robot"></i> AI Mentor</a></li>
+                <li><a href="roadmap.html" class="sidebar-link"><i class="fas fa-map"></i> Learning Roadmap</a></li>
+                <li><a href="exercises.html" class="sidebar-link"><i class="fas fa-pen-fancy"></i> Exercises</a></li>
+                <li><a href="progress.html" class="sidebar-link"><i class="fas fa-chart-line"></i> Progress</a></li>
+                <li><a href="drawing-lab.html" class="sidebar-link active"><i class="fas fa-palette"></i> Drawing Lab</a></li>
+                <li><a href="profile.html" class="sidebar-link"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-with-sidebar">
+        <div class="page-header">
+            <h1 class="page-title">Interactive Drawing Lab</h1>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="watch">Watch & Learn</button>
+            <button class="tab-btn" data-tab="draw">Try It Yourself</button>
+            <button class="tab-btn" data-tab="evaluate">Submit & Evaluate</button>
+        </div>
+
+        <!-- Tab 1: Watch & Learn -->
+        <div class="tab-panel active" id="tab-watch">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Watch & Learn</h3>
+                    <select id="demoSelect" class="form-input demo-select">
+                        <option value="perspective-box">Drawing a Box in 2-Point Perspective</option>
+                        <option value="shading-sphere">Shading a Sphere</option>
+                        <option value="table-shading">Drawing a Table with Shading</option>
+                        <option value="cylinder">Cylinder Construction</option>
+                        <option value="gesture">Figure Gesture Drawing</option>
+                    </select>
+                </div>
+                <div class="card-body">
+                    <div class="canvas-container">
+                        <canvas id="animationCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="animation-controls">
+                        <button id="playPauseBtn" class="btn btn-primary">
+                            <i class="fas fa-play"></i> Play
+                        </button>
+                        <button id="stopBtn" class="btn btn-secondary">
+                            <i class="fas fa-stop"></i> Stop
+                        </button>
+                        <div class="speed-control">
+                            <label for="speedSelect">Speed:</label>
+                            <select id="speedSelect" class="form-input speed-select">
+                                <option value="0.5">0.5x</option>
+                                <option value="1" selected>1x</option>
+                                <option value="1.5">1.5x</option>
+                                <option value="2">2x</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="step-indicator" id="stepIndicator">
+                        <span class="step-text">Step 0 of 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Try It Yourself -->
+        <div class="tab-panel" id="tab-draw">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Try It Yourself</h3>
+                </div>
+                <div class="card-body">
+                    <div class="draw-toolbar">
+                        <button id="penTool" class="btn btn-sm btn-primary tool-btn active">
+                            <i class="fas fa-pen"></i> Pen
+                        </button>
+                        <button id="eraserTool" class="btn btn-sm btn-secondary tool-btn">
+                            <i class="fas fa-eraser"></i> Eraser
+                        </button>
+                        <div class="tool-separator"></div>
+                        <label for="brushSize">Size:</label>
+                        <input type="range" id="brushSize" min="1" max="20" value="3" class="slider">
+                        <div class="tool-separator"></div>
+                        <label for="colorPicker">Color:</label>
+                        <input type="color" id="colorPicker" value="#f0a030" class="color-picker">
+                        <div class="tool-separator"></div>
+                        <button id="clearCanvas" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                        <button id="undoBtn" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-undo"></i> Undo
+                        </button>
+                        <div class="tool-separator"></div>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="referenceToggle">
+                            Show Reference
+                        </label>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="drawCanvas" width="600" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Submit & Evaluate -->
+        <div class="tab-panel" id="tab-evaluate">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Submit & Evaluate</h3>
+                </div>
+                <div class="card-body">
+                    <!-- File Upload -->
+                    <div class="upload-area" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <p>Drag & drop your artwork here, or click to browse</p>
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                    </div>
+
+                    <!-- Camera Capture -->
+                    <div class="camera-section">
+                        <h4>Or capture from camera</h4>
+                        <button id="openCameraBtn" class="btn btn-secondary">
+                            <i class="fas fa-camera"></i> Open Camera
+                        </button>
+                        <div class="video-preview" id="videoPreview" style="display: none;">
+                            <video id="cameraFeed" width="320" height="240" autoplay></video>
+                            <button id="captureBtn" class="btn btn-primary">
+                                <i class="fas fa-camera"></i> Capture
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div class="submission-preview" id="submissionPreview" style="display: none;">
+                        <h4>Your Submission</h4>
+                        <img id="previewImage" class="preview-image" alt="Artwork preview">
+                        <button id="evaluateBtn" class="btn btn-primary">
+                            <i class="fas fa-robot"></i> Evaluate with AI
+                        </button>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="evaluation-results" id="evaluationResults" style="display: none;">
+                        <h4>AI Evaluation</h4>
+                        <div class="score-meter">
+                            <svg viewBox="0 0 120 120" class="score-svg">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#2a2a3e" stroke-width="8"/>
+                                <circle id="scoreCircle" cx="60" cy="60" r="54" fill="none" stroke="#f0a030" stroke-width="8"
+                                    stroke-dasharray="339.292" stroke-dashoffset="339.292" stroke-linecap="round"
+                                    transform="rotate(-90 60 60)"/>
+                                <text x="60" y="55" text-anchor="middle" class="score-value" id="scoreValue">0</text>
+                                <text x="60" y="75" text-anchor="middle" class="score-label">/100</text>
+                            </svg>
+                        </div>
+                        <div class="feedback-columns">
+                            <div class="feedback-list strengths">
+                                <h5><i class="fas fa-check-circle"></i> Strengths</h5>
+                                <ul id="strengthsList"></ul>
+                            </div>
+                            <div class="feedback-list improvements">
+                                <h5><i class="fas fa-lightbulb"></i> Improvements</h5>
+                                <ul id="improvementsList"></ul>
+                            </div>
+                        </div>
+                        <div class="detailed-feedback">
+                            <h5>Detailed Feedback</h5>
+                            <p id="detailedFeedback"></p>
+                        </div>
+                    </div>
+
+                    <!-- Loading state for evaluation -->
+                    <div id="evaluationLoading" class="loading-indicator" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Analyzing your artwork...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/pages/drawing-lab.js"></script>
+    <script src="../js/canvas-draw.js"></script>
+    <script src="../js/camera.js"></script>
+</body>
+</html>

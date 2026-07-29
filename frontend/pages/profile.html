@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile — AtelierAI</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="main-with-sidebar">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="../index.html" class="sidebar-brand">
+                <i class="fas fa-paint-brush"></i> AtelierAI
+            </a>
+        </div>
+        <div class="sidebar-section">
+            <span class="sidebar-section-title">Menu</span>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html" class="sidebar-link"><i class="fas fa-chart-bar"></i> Dashboard</a></li>
+                <li><a href="mentor.html" class="sidebar-link"><i class="fas fa-robot"></i> AI Mentor</a></li>
+                <li><a href="roadmap.html" class="sidebar-link"><i class="fas fa-map"></i> Learning Roadmap</a></li>
+                <li><a href="exercises.html" class="sidebar-link"><i class="fas fa-pen-fancy"></i> Exercises</a></li>
+                <li><a href="progress.html" class="sidebar-link"><i class="fas fa-chart-line"></i> Progress</a></li>
+                <li><a href="drawing-lab.html" class="sidebar-link"><i class="fas fa-palette"></i> Drawing Lab</a></li>
+                <li><a href="profile.html" class="sidebar-link active"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-with-sidebar">
+        <div class="page-header">
+            <h1 class="page-title">Your Profile</h1>
+        </div>
+
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar">
+                <span class="avatar-initials">A</span>
+            </div>
+            <div class="profile-info">
+                <h2 id="profileUsername">Artist</h2>
+                <p class="profile-member-since">Member since <span id="memberSince">January 2026</span></p>
+            </div>
+        </div>
+
+        <!-- Edit Form -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Edit Profile</h3>
+            </div>
+            <div class="card-body">
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label>Avatar</label>
+                        <div class="avatar-upload" id="avatarUpload">
+                            <i class="fas fa-camera"></i>
+                            <span>Click to upload</span>
+                            <input type="file" id="avatarInput" accept="image/*" hidden>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="displayUsername">Username</label>
+                        <input type="text" id="displayUsername" class="form-input" disabled value="Artist">
+                    </div>
+                    <div class="form-group">
+                        <label for="profileEmail">Email</label>
+                        <input type="email" id="profileEmail" name="email" class="form-input" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="profileSkillLevel">Skill Level</label>
+                        <select id="profileSkillLevel" name="skillLevel" class="form-input">
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Artistic Interests</label>
+                        <div class="tags-container" id="interestsTags">
+                            <span class="tag" data-tag="perspective">Perspective</span>
+                            <span class="tag" data-tag="anatomy">Anatomy</span>
+                            <span class="tag" data-tag="shading">Shading</span>
+                            <span class="tag" data-tag="line-control">Line Control</span>
+                            <span class="tag" data-tag="composition">Composition</span>
+                            <span class="tag" data-tag="color-theory">Color Theory</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileGoals">Learning Goals</label>
+                        <textarea id="profileGoals" name="goals" class="form-input form-textarea" placeholder="What do you want to achieve?" rows="4"></textarea>
+                    </div>
+
+                    <div id="profileError" class="auth-error" style="display: none;"></div>
+                    <div id="profileSuccess" class="success-message" style="display: none;"></div>
+
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/pages/profile.js"></script>
+</body>
+</html>
