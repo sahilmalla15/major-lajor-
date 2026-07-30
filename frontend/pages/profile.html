@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile — AtelierAI</title>
+    <title>Profile — Atelier</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@200;300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="main-with-sidebar">
+<body class="theme-warm">
 
     <!-- Sidebar -->
     <nav class="sidebar">
         <div class="sidebar-header">
             <a href="../index.html" class="sidebar-brand">
-                <i class="fas fa-paint-brush"></i> AtelierAI
+                <i class="fas fa-paint-brush"></i> Atelier
             </a>
         </div>
         <div class="sidebar-section">
@@ -99,6 +102,10 @@
 
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>
+                <hr style="border: none; border-top: 1px solid var(--border-color-light); margin: var(--space-lg) 0;">
+                <button class="btn btn-danger btn-full" onclick="Auth.logout()">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
             </div>
         </div>
     </main>

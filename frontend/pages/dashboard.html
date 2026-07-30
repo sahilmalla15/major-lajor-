@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard — AtelierAI</title>
+    <title>Dashboard — Atelier</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@200;300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="main-with-sidebar">
+<body class="theme-warm">
 
     <!-- Sidebar -->
     <nav class="sidebar">
         <div class="sidebar-header">
             <a href="../index.html" class="sidebar-brand">
-                <i class="fas fa-paint-brush"></i> AtelierAI
+                <i class="fas fa-paint-brush"></i> Atelier
             </a>
         </div>
         <div class="sidebar-section">
@@ -46,29 +49,29 @@
 
         <!-- Stats Grid -->
         <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">📚</div>
+            <div class="stat-card stat-card-enhanced" data-accent="white">
+                <div class="stat-icon white"><i class="fas fa-book-open"></i></div>
                 <div class="stat-content">
                     <span class="stat-label">Lessons Completed</span>
                     <span class="stat-value" id="lessonsCompleted">0</span>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon">🔥</div>
+            <div class="stat-card stat-card-enhanced" data-accent="purple">
+                <div class="stat-icon purple"><i class="fas fa-fire"></i></div>
                 <div class="stat-content">
                     <span class="stat-label">Day Streak</span>
                     <span class="stat-value" id="dayStreak">0</span>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon">✏️</div>
+            <div class="stat-card stat-card-enhanced" data-accent="green">
+                <div class="stat-icon green"><i class="fas fa-pen-fancy"></i></div>
                 <div class="stat-content">
                     <span class="stat-label">Exercises Done</span>
                     <span class="stat-value" id="exercisesDone">0</span>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon">🎨</div>
+            <div class="stat-card stat-card-enhanced" data-accent="blue">
+                <div class="stat-icon blue"><i class="fas fa-robot"></i></div>
                 <div class="stat-content">
                     <span class="stat-label">Mentor Queries</span>
                     <span class="stat-value" id="mentorQueries">0</span>

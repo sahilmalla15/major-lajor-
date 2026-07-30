@@ -1,99 +1,698 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-scroll="0">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AtelierAI — Master Art with AI</title>
+    <meta name="description" content="Master the Art of Drawing with AI - Personalized learning paths, AI mentorship, and interactive exercises.">
+    <title>Atelier — Master Art with AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@200;300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
+<body class="landing-light" style="cursor: none; background: #FFFFFF; color: #1A1A1A;">
+
+    <!-- Custom Cursor - Pencil -->
+    <div class="custom-cursor" id="customCursor">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Graphite tip (pointing down-right, tip at 0,0) -->
+            <path d="M0 0L6 4L4 6L0 0Z" fill="#222222"/>
+            <path d="M0 0L4 6L8 8L6 4L0 0Z" fill="#444444"/>
+            <!-- Wood -->
+            <path d="M6 4L8 8L12 10L10 6L6 4Z" fill="#D4C4A8"/>
+            <!-- Body -->
+            <path d="M10 6L12 10L28 8L24 4L10 6Z" fill="white" stroke="#DDDDDD" stroke-width="0.3"/>
+            <path d="M10 6L24 4L22 2L8 4L10 6Z" fill="#F0F0F0" stroke="#DDDDDD" stroke-width="0.3"/>
+            <!-- Ferrule -->
+            <path d="M24 4L28 8L30 6L26 2L24 4Z" fill="#888888"/>
+            <!-- Eraser -->
+            <path d="M26 2L30 6L32 4L28 0L26 2Z" fill="#A0A0A0"/>
+        </svg>
+    </div>
 
     <!-- Navbar -->
-    <nav class="navbar">
+    <nav class="navbar navbar-landing" style="background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom-color: rgba(0, 0, 0, 0.05);">
         <div class="container nav-container">
-            <a href="index.html" class="nav-brand">
-                <i class="fas fa-paint-brush"></i> AtelierAI
+            <a href="index.html" class="nav-brand" style="color: #1A1A1A;">
+                <span class="brand-icon"><i class="fas fa-paint-brush"></i></span> Atelier
             </a>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="#features" class="nav-link">Features</a>
-                <a href="pages/login.html" class="nav-link">Login</a>
-                <a href="pages/register.html" class="nav-link">Register</a>
+            <div class="landing-nav-links">
+                <a href="index.html" class="nav-link active" style="color: #1A1A1A;">Home</a>
+                <a href="#features" class="nav-link" style="color: #888888;">Features</a>
+                <a href="pages/login.html" class="nav-link" style="color: #888888;">Sign In</a>
+                <a href="pages/register.html" class="btn btn-sm btn-arrow-group" style="background: #000000; color: #fff;">
+                    Get Started <span class="btn-arrow">→</span>
+                </a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="container hero-content">
-            <h1 class="hero-title">Master the Art of Drawing with AI</h1>
-            <p class="hero-subtitle">Personalized learning paths, AI-powered mentorship, and interactive exercises to transform you into the artist you've always wanted to be.</p>
-            <div class="hero-actions">
-                <a href="pages/register.html" class="btn btn-primary btn-lg">Start Learning Free</a>
-                <a href="#features" class="btn btn-secondary btn-lg">Explore Features</a>
+    <section class="hero-trionn section-pin" id="heroSection">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content">
+            <p class="hero-label" id="heroLabel" style="color: #999999;">AI-Powered Art Education</p>
+            <h1 class="hero-title" id="heroTitle" style="color: #1A1A1A;">
+                <span class="line"><span>Master the</span></span>
+                <span class="line"><span style="background: linear-gradient(135deg, #000000, #666666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Art of Drawing</span></span>
+            </h1>
+            <p class="hero-subtitle" id="heroSubtitle" style="color: #888888;">Personalized learning paths, AI mentorship, and interactive exercises — everything you need to transform into the artist you've always wanted to be.</p>
+            <div class="hero-actions" id="heroCta">
+                <a href="pages/register.html" class="btn btn-lg btn-arrow-group" style="background: #000000; color: #fff; box-shadow: 0 4px 15px rgba(199, 91, 59, 0.3);">
+                    Start Learning <span class="btn-arrow">→</span>
+                </a>
+                <a href="#features" class="btn btn-lg btn-arrow-group btn-arrow-left" style="background: #fff; color: #1A1A1A; border: 1px solid rgba(0, 0, 0, 0.08);">
+                    <span class="btn-arrow">→</span> Explore
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Marquee Stats -->
+    <div class="marquee-trionn section-pin" style="border-top: 1px solid var(--border-color-light); border-bottom: 1px solid var(--border-color-light);">
+        <div class="marquee-track" id="marqueeTrack">
+            <div class="marquee-item"><span style="color: #000000; font-family: 'JetBrains Mono', monospace;">1000+</span>&nbsp;Students</div>
+            <span class="marquee-divider" style="background: #000000;"></span>
+            <div class="marquee-item"><span style="color: #000000; font-family: 'JetBrains Mono', monospace;">50+</span>&nbsp;Lessons</div>
+            <span class="marquee-divider" style="background: #000000;"></span>
+            <div class="marquee-item"><span style="color: #000000; font-family: 'JetBrains Mono', monospace;">500+</span>&nbsp;Exercises</div>
+            <span class="marquee-divider" style="background: #000000;"></span>
+            <div class="marquee-item"><span style="color: #000000; font-family: 'JetBrains Mono', monospace;">98%</span>&nbsp;Satisfaction</div>
+            <span class="marquee-divider" style="background: #000000;"></span>
+            <!-- Duplicate for seamless loop -->
+            <div class="marquee-item"><span style="color: #000000; font-family: 'JetBrains Mono', monospace;">1000+</span>&nbsp;Students</div>
+            <span class="marquee-divider" style="background: #000000;"></span>
+            <div class="marquee-item"><span style="color: #000000; font-family: 'JetBrains Mono', monospace;">50+</span>&nbsp;Lessons</div>
+            <span class="marquee-divider" style="background: #000000;"></span>
+            <div class="marquee-item"><span style="color: #000000; font-family: 'JetBrains Mono', monospace;">500+</span>&nbsp;Exercises</div>
+            <span class="marquee-divider" style="background: #000000;"></span>
+            <div class="marquee-item"><span style="color: #000000; font-family: 'JetBrains Mono', monospace;">98%</span>&nbsp;Satisfaction</div>
+            <span class="marquee-divider"></span>
+        </div>
+    </div>
+
+    <!-- Vision Section -->
+    <section class="vision-trionn section-pin" id="visionSection" style="padding: var(--space-3xl) 0;">
+        <div class="container">
+            <div class="vision-large-title" id="visionTitle">
+                <span class="line"><span>Learn.</span></span>
+                <span class="line"><span style="color: #000000;">Create.</span></span>
+                <span class="line"><span>Grow.</span></span>
+            </div>
+            <div class="vision-text" id="visionText">
+                <p>Three principles guide everything we build. Personalized learning paths adapt to your unique pace and goals. Expert AI mentorship provides instant feedback on your work. And clear progress tracking shows you exactly how far you've come.</p>
             </div>
         </div>
     </section>
+
+    <div class="stripe-divider"></div>
 
     <!-- Features Section -->
-    <section id="features" class="features-section">
+    <section id="features" class="section-pin" style="padding: var(--space-3xl) 0;">
         <div class="container">
-            <h2 class="section-title">Why AtelierAI?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">AI Art Mentor</h3>
-                    <p class="feature-desc">Get instant, personalized guidance from our AI tutor powered by Retrieval-Augmented Generation. Ask questions, get feedback, and learn at your own pace.</p>
+            <div style="margin-bottom: var(--space-2xl);" id="featuresHeader">
+                <p style="font-size: var(--font-size-xs); color: #8C7B6B; letter-spacing: 3px; text-transform: uppercase; margin-bottom: var(--space-sm); font-weight: 500;">Why Atelier</p>
+                <h2 style="font-size: clamp(2rem, 4vw, var(--font-size-4xl)); font-weight: 400; font-family: var(--font-family-display); color: #2C2420;">Everything you need to<br><span style="color: #000000;">accelerate your art journey</span></h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-md);">
+                <div class="feature-card-trionn" data-tilt-card>
+                    <span class="feature-number">01</span>
+                    <div class="feature-icon-wrapper"><i class="fas fa-robot"></i></div>
+                    <h3>AI Art Mentor</h3>
+                    <p>Get instant, personalized guidance from our AI tutor powered by Retrieval-Augmented Generation. Ask questions, get feedback, and learn at your own pace.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📚</div>
-                    <h3 class="feature-title">Structured Roadmaps</h3>
-                    <p class="feature-desc">Follow a personalized learning path tailored to your skill level and artistic goals. Progress from basics to advanced techniques.</p>
+                <div class="feature-card-trionn" data-tilt-card>
+                    <span class="feature-number">02</span>
+                    <div class="feature-icon-wrapper"><i class="fas fa-map-signs"></i></div>
+                    <h3>Structured Roadmaps</h3>
+                    <p>Follow a personalized learning path tailored to your skill level and artistic goals. Progress from basics to advanced techniques with confidence.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">✍️</div>
-                    <h3 class="feature-title">Interactive Drawing Lab</h3>
-                    <p class="feature-desc">Watch step-by-step drawing animations, practice with digital tools, and get AI evaluation of your artwork.</p>
+                <div class="feature-card-trionn" data-tilt-card>
+                    <span class="feature-number">03</span>
+                    <div class="feature-icon-wrapper"><i class="fas fa-palette"></i></div>
+                    <h3>Interactive Drawing Lab</h3>
+                    <p>Watch step-by-step animations, practice with digital tools, capture your artwork, and get AI-powered evaluation of your creations.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section class="how-it-works">
+    <div class="stripe-divider"></div>
+
+    <!-- How It Works -->
+    <section class="section-pin" style="padding: var(--space-3xl) 0;">
         <div class="container">
-            <h2 class="section-title">How It Works</h2>
-            <div class="steps-container">
-                <div class="step-card">
-                    <span class="step-number">1</span>
+            <div style="margin-bottom: var(--space-2xl);" id="stepsHeader">
+                <p style="font-size: var(--font-size-xs); color: #8C7B6B; letter-spacing: 3px; text-transform: uppercase; margin-bottom: var(--space-sm); font-weight: 500;">How It Works</p>
+                <h2 style="font-size: clamp(2rem, 4vw, var(--font-size-4xl)); font-weight: 400; font-family: var(--font-family-display); color: #2C2420;">Three steps to start your<br><span style="color: #000000;">artistic journey</span></h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg);">
+                <div class="step-trionn">
+                    <div class="step-number">01</div>
                     <h3>Create Your Profile</h3>
-                    <p>Set up your profile and tell us your current skill level and artistic interests.</p>
+                    <p>Tell us your skill level and interests. Our AI uses this to build your personalized learning foundation.</p>
                 </div>
-                <div class="step-card">
-                    <span class="step-number">2</span>
+                <div class="step-trionn">
+                    <div class="step-number">02</div>
                     <h3>Get Your Roadmap</h3>
-                    <p>Receive a personalized learning roadmap tailored to your goals and experience.</p>
+                    <p>Receive a tailored learning path from beginner to advanced, with clear milestones and achievable goals.</p>
                 </div>
-                <div class="step-card">
-                    <span class="step-number">3</span>
+                <div class="step-trionn">
+                    <div class="step-number">03</div>
                     <h3>Learn & Grow</h3>
-                    <p>Follow your path with AI guidance, practice exercises, and track your progress every step of the way.</p>
+                    <p>Follow your path with AI guidance, hands-on practice, and detailed tracking of your progress.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="stripe-divider"></div>
+
+    <!-- Testimonials -->
+    <section class="section-pin" style="padding: var(--space-3xl) 0;">
+        <div class="container">
+            <div style="margin-bottom: var(--space-2xl);" id="testimonialsHeader">
+                <p style="font-size: var(--font-size-xs); color: #8C7B6B; letter-spacing: 3px; text-transform: uppercase; margin-bottom: var(--space-sm); font-weight: 500;">Testimonials</p>
+                <h2 style="font-size: clamp(2rem, 4vw, var(--font-size-4xl)); font-weight: 400; font-family: var(--font-family-display); color: #2C2420;">What <span style="color: #000000;">artists say</span></h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-md);">
+                <div class="testimonial-trionn glass-card">
+                    <div class="testimonial-quote">"</div>
+                    <p class="testimonial-text">"Atelier completely changed how I approach drawing. The AI mentor gives feedback that actually makes sense. I've improved more in 3 months than in 2 years on my own."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SK</div>
+                        <div>
+                            <div class="author-name">Sarah Kim</div>
+                            <div class="author-role">Intermediate Artist</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-trionn glass-card">
+                    <div class="testimonial-quote">"</div>
+                    <p class="testimonial-text">"As a complete beginner, I was intimidated to start learning art. The structured roadmap made it feel achievable. The step-by-step animations are incredible."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MJ</div>
+                        <div>
+                            <div class="author-name">Marcus Johnson</div>
+                            <div class="author-role">Beginner Artist</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-trionn glass-card">
+                    <div class="testimonial-quote">"</div>
+                    <p class="testimonial-text">"The AI evaluation of my drawings is incredibly detailed. It doesn't just tell me what's wrong — it shows me how to fix it. This is the platform I've been waiting for."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">EL</div>
+                        <div>
+                            <div class="author-name">Elena Liu</div>
+                            <div class="author-role">Advanced Artist</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="stripe-divider"></div>
+
+    <!-- CTA Section -->
+    <section class="cta-trionn section-pin">
+        <div class="container">
+            <h2 style="color: #2C2420;">Ready to start your<br><span style="color: #000000;">artistic journey</span>?</h2>
+            <p style="color: #8C7B6B;">Join thousands of artists learning with AI-powered guidance. No credit card required.</p>
+            <div class="hero-actions">
+                <a href="pages/register.html" class="btn btn-lg btn-arrow-group" style="background: #000000; color: #fff; box-shadow: 0 4px 15px rgba(199, 91, 59, 0.3);">
+                    Start Learning Free <span class="btn-arrow">→</span>
+                </a>
+                <a href="#features" class="btn btn-lg btn-arrow-group btn-arrow-left" style="background: #fff; color: #2C2420; border: 1px solid #E5DDD3;">
+                    <span class="btn-arrow">→</span> Learn More
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-content">
-            <p>&copy; 2026 AtelierAI. Made with <i class="fas fa-heart"></i> for artists everywhere.</p>
+    <footer class="footer-trionn">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand" style="display: flex; align-items: center; gap: var(--space-sm);">
+                        Atelier
+                    </div>
+                    <p class="footer-desc">Empowering artists worldwide with AI-powered learning. Master the art of drawing with personalized mentorship.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="pages/roadmap.html">Roadmap</a></li>
+                        <li><a href="pages/exercises.html">Exercises</a></li>
+                        <li><a href="pages/drawing-lab.html">Drawing Lab</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Gallery</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Atelier. Made with <i class="fas fa-heart" style="color: #000000;"></i> for artists everywhere.</p>
+            </div>
         </div>
     </footer>
 
-    <script src="js/api.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/main.js"></script>
+    <!-- ===== SCRIPTS ===== -->
+    <!-- (All JS is inline below) -->
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
+
+    <script>
+    // ============================================
+    // 1. LENIS SMOOTH SCROLL
+    // ============================================
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        orientation: 'vertical',
+        smoothWheel: true,
+    });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // ============================================
+    // 2. THREE.JS — GLOWING PARTICLE FIELD
+    // ============================================
+    (function() {
+        const canvas = document.getElementById('hero-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Central glowing icosahedron
+        const geo = new THREE.IcosahedronGeometry(1.1, 1);
+        const mat = new THREE.MeshPhongMaterial({
+            color: 0x000000,
+            emissive: 0x222222,
+            emissiveIntensity: 0.15,
+            transparent: true,
+            opacity: 0.5,
+            shininess: 60,
+            specular: 0x666666,
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        scene.add(mesh);
+
+        // Octahedron - smaller, orbiting
+        const octGeo = new THREE.OctahedronGeometry(0.6, 0);
+        const octMat = new THREE.MeshPhongMaterial({
+            color: 0x666666,
+            emissive: 0x444444,
+            emissiveIntensity: 0.1,
+            transparent: true,
+            opacity: 0.4,
+            shininess: 40,
+        });
+        const octMesh = new THREE.Mesh(octGeo, octMat);
+        octMesh.position.set(2.2, 0.5, 0);
+        scene.add(octMesh);
+
+        // Torus knot - floating, rotating
+        const torusGeo = new THREE.TorusKnotGeometry(0.5, 0.2, 64, 8, 2, 3);
+        const torusMat = new THREE.MeshPhongMaterial({
+            color: 0x999999,
+            emissive: 0x555555,
+            emissiveIntensity: 0.08,
+            transparent: true,
+            opacity: 0.35,
+            wireframe: true,
+        });
+        const torusMesh = new THREE.Mesh(torusGeo, torusMat);
+        torusMesh.position.set(-2.0, -0.8, 0);
+        scene.add(torusMesh);
+
+        // Small Cube
+        const cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+        const cubeMat = new THREE.MeshPhongMaterial({
+            color: 0x777777,
+            emissive: 0x333333,
+            emissiveIntensity: 0.1,
+            transparent: true,
+            opacity: 0.3,
+            wireframe: true,
+        });
+        const cubeMesh = new THREE.Mesh(cubeGeo, cubeMat);
+        cubeMesh.position.set(0, 1.8, 0);
+        scene.add(cubeMesh);
+
+        // Icosahedron wireframe overlay
+        const wireMat = new THREE.MeshBasicMaterial({
+            color: 0x999999,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.1,
+        });
+        const wire = new THREE.Mesh(geo.clone(), wireMat);
+        wire.scale.set(1.05, 1.05, 1.05);
+        scene.add(wire);
+
+        // Inner glow sphere
+        const glowGeo = new THREE.SphereGeometry(0.6, 32, 32);
+        const glowMat = new THREE.MeshBasicMaterial({
+            color: 0xFDF6ED,
+            transparent: true,
+            opacity: 0.1,
+        });
+        const glowSphere = new THREE.Mesh(glowGeo, glowMat);
+        scene.add(glowSphere);
+
+        // Particle system — 2000 particles
+        const particleCount = 1500;
+        const positions = new Float32Array(particleCount * 3);
+        const sizes = new Float32Array(particleCount);
+        for (let i = 0; i < particleCount; i++) {
+            const radius = 2.5 + Math.random() * 3.5;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+            positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+            positions[i * 3 + 2] = radius * Math.cos(phi);
+            sizes[i] = 0.02 + Math.random() * 0.04;
+        }
+        const particleGeo = new THREE.BufferGeometry();
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particleGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0x666666,
+            size: 0.03,
+            transparent: true,
+            opacity: 0.25,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true,
+        });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        // Second particle ring (inner, smaller)
+        const innerCount = 500;
+        const innerPos = new Float32Array(innerCount * 3);
+        for (let i = 0; i < innerCount; i++) {
+            const angle = (i / innerCount) * Math.PI * 2;
+            const r = 1.8 + Math.random() * 0.3;
+            innerPos[i * 3] = Math.cos(angle) * r;
+            innerPos[i * 3 + 1] = Math.sin(angle * 2) * r * 0.3;
+            innerPos[i * 3 + 2] = Math.sin(angle) * r;
+        }
+        const innerGeo = new THREE.BufferGeometry();
+        innerGeo.setAttribute('position', new THREE.BufferAttribute(innerPos, 3));
+        const innerMat = new THREE.PointsMaterial({
+            color: 0x888888,
+            size: 0.02,
+            transparent: true,
+            opacity: 0.35,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true,
+        });
+        const innerRing = new THREE.Points(innerGeo, innerMat);
+        scene.add(innerRing);
+
+        // Lighting
+        const ambient = new THREE.AmbientLight(0x333333, 0.5);
+        scene.add(ambient);
+        const light1 = new THREE.DirectionalLight(0xE0E0E0, 2);
+        light1.position.set(5, 10, 7);
+        scene.add(light1);
+        const light2 = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+        light2.position.set(-5, -5, -5);
+        scene.add(light2);
+
+        camera.position.z = 5;
+
+        // Mouse tracking
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', function(e) {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        // Scroll fade
+        let opacity = 1;
+        window.addEventListener('scroll', function() {
+            const s = window.scrollY;
+            const h = window.innerHeight;
+            opacity = Math.max(0, 1 - s / h * 1.5);
+            mat.opacity = 0.6 * opacity;
+            octMat.opacity = 0.5 * opacity;
+            torusMat.opacity = 0.4 * opacity;
+            cubeMat.opacity = 0.35 * opacity;
+            wireMat.opacity = 0.1 * opacity;
+            particleMat.opacity = 0.4 * opacity;
+            innerMat.opacity = 0.6 * opacity;
+            glowMat.opacity = 0.1 * opacity;
+        });
+
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = Date.now() * 0.001;
+            // Central icosahedron
+            mesh.rotation.x += 0.003;
+            mesh.rotation.y += 0.006;
+            wire.rotation.x = mesh.rotation.x;
+            wire.rotation.y = mesh.rotation.y;
+            glowSphere.rotation.x = mesh.rotation.x * 0.5;
+            glowSphere.rotation.y = mesh.rotation.y * 0.5;
+            // Octahedron orbit + spin
+            const orbitAngle = time * 0.3;
+            octMesh.position.x = 2.8 * Math.cos(orbitAngle);
+            octMesh.position.z = 2.8 * Math.sin(orbitAngle);
+            octMesh.position.y = 0.5 * Math.sin(orbitAngle * 0.7);
+            octMesh.rotation.x += 0.015;
+            octMesh.rotation.y += 0.025;
+            // Torus knot rotation
+            torusMesh.rotation.x += 0.008;
+            torusMesh.rotation.y += 0.015;
+            torusMesh.rotation.z += 0.005;
+            // Cube spin
+            cubeMesh.rotation.x += 0.01;
+            cubeMesh.rotation.y += 0.02;
+            cubeMesh.rotation.z += 0.007;
+            // Particles
+            particles.rotation.x += 0.0005;
+            particles.rotation.y += 0.001;
+            innerRing.rotation.x += 0.002;
+            innerRing.rotation.y += 0.004;
+            // Mouse parallax
+            mesh.rotation.x += mouseY * 0.008;
+            mesh.rotation.y += mouseX * 0.008;
+            wire.rotation.x = mesh.rotation.x;
+            wire.rotation.y = mesh.rotation.y;
+            octMesh.rotation.x += mouseY * 0.005;
+            octMesh.rotation.y += mouseX * 0.005;
+            // Pulse glow
+            const pulse = 0.15 + 0.08 * Math.sin(time * 0.8);
+            mat.emissiveIntensity = pulse;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    })();
+
+    // ============================================
+    // 3. CUSTOM CURSOR
+    // ============================================
+    const cursor = document.getElementById('customCursor');
+    let cursorX = -100, cursorY = -100;
+    document.addEventListener('mousemove', function(e) {
+        cursorX = e.clientX;
+        cursorY = e.clientY;
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+    });
+    document.querySelectorAll('a, button, [data-tilt-card], .feature-card-trionn').forEach(function(el) {
+        el.addEventListener('mouseenter', function() { cursor.classList.add('hovering'); });
+        el.addEventListener('mouseleave', function() { cursor.classList.remove('hovering'); });
+    });
+    document.addEventListener('mouseleave', function() { cursor.style.opacity = '0'; });
+    document.addEventListener('mouseenter', function() { cursor.style.opacity = '1'; });
+
+    // ============================================
+    // 4. GSAP — HERO TEXT PER-CHAR ANIMATION
+    // ============================================
+    // Split hero heading into chars
+    const titleEl = document.getElementById('heroTitle');
+    const lines = titleEl.querySelectorAll('.line');
+    lines.forEach(function(line) {
+        const text = line.textContent.trim();
+        line.textContent = '';
+        text.split('').forEach(function(char) {
+            const span = document.createElement('span');
+            span.className = 'char';
+            span.textContent = char === ' ' ? ' ' : char;
+            line.appendChild(span);
+        });
+    });
+
+    // Stagger chars in
+    const allChars = titleEl.querySelectorAll('.char');
+    gsap.fromTo(allChars,
+        { y: 120, opacity: 0, rotateX: -30 },
+        {
+            y: 0, opacity: 1, rotateX: 0,
+            duration: 0.8,
+            stagger: 0.02,
+            ease: 'power3.out',
+            delay: 0.3,
+        }
+    );
+
+    // Hero label fade-up
+    gsap.fromTo('#heroLabel', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, delay: 0.8 });
+
+    // Hero subtitle fade-up
+    gsap.fromTo('#heroSubtitle', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, delay: 1.0 });
+
+    // Hero CTA buttons
+    gsap.fromTo('#heroCta', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, delay: 1.2 });
+
+    // ============================================
+    // 5. GSAP — MARQUEE
+    // ============================================
+    const marqueeTrack = document.getElementById('marqueeTrack');
+    const marqueeWidth = marqueeTrack.scrollWidth / 2;
+    gsap.to(marqueeTrack, {
+        x: -marqueeWidth,
+        duration: 25,
+        ease: 'none',
+        repeat: -1,
+    });
+
+    // ============================================
+    // 6. GSAP — SCROLLTRIGGER REVEALS
+    // ============================================
+    // Vision section — split text per-char
+    const visionTitle = document.getElementById('visionTitle');
+    const visionLines = visionTitle.querySelectorAll('.line');
+    visionLines.forEach(function(line) {
+        const text = line.textContent.trim();
+        line.textContent = '';
+        text.split('').forEach(function(char) {
+            const span = document.createElement('span');
+            span.className = 'char';
+            span.textContent = char === ' ' ? ' ' : char;
+            line.appendChild(span);
+        });
+    });
+    const visionChars = visionTitle.querySelectorAll('.char');
+    gsap.fromTo(visionChars,
+        { y: 80, opacity: 0 },
+        {
+            y: 0, opacity: 1,
+            duration: 0.6,
+            stagger: 0.015,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '#visionSection',
+                start: 'top 75%',
+                toggleActions: 'play none none reverse',
+            }
+        }
+    );
+
+    // Vision text reveal
+    gsap.fromTo('#visionText', { y: 30, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: '#visionText', start: 'top 85%', toggleActions: 'play none none reverse' }
+    });
+
+    // Features header
+    gsap.fromTo('#featuresHeader', { y: 40, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: '#featuresHeader', start: 'top 80%', toggleActions: 'play none none reverse' }
+    });
+
+    // Feature cards stagger
+    gsap.fromTo('.feature-card-trionn', { y: 60, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power2.out',
+        scrollTrigger: { trigger: '.feature-card-trionn', start: 'top 85%', toggleActions: 'play none none reverse' }
+    });
+
+    // Steps header
+    gsap.fromTo('#stepsHeader', { y: 40, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: '#stepsHeader', start: 'top 80%', toggleActions: 'play none none reverse' }
+    });
+
+    // Step cards stagger
+    gsap.fromTo('.step-trionn', { y: 60, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power2.out',
+        scrollTrigger: { trigger: '.step-trionn', start: 'top 85%', toggleActions: 'play none none reverse' }
+    });
+
+    // Testimonials
+    gsap.fromTo('#testimonialsHeader', { y: 40, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: '#testimonialsHeader', start: 'top 80%', toggleActions: 'play none none reverse' }
+    });
+    gsap.fromTo('.testimonial-trionn', { y: 60, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power2.out',
+        scrollTrigger: { trigger: '.testimonial-trionn', start: 'top 85%', toggleActions: 'play none none reverse' }
+    });
+
+    // ============================================
+    // 7. CARD TILT EFFECT (mouse-follow gradient)
+    // ============================================
+    document.querySelectorAll('[data-tilt-card]').forEach(function(card) {
+        card.addEventListener('mousemove', function(e) {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--mouse-x', x + '%');
+            card.style.setProperty('--mouse-y', y + '%');
+        });
+    });
+    </script>
 </body>
 </html>

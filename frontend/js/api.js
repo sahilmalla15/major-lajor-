@@ -1,5 +1,5 @@
 /**
- * AtelierAI — API Client
+ * Atelier — API Client
  * Centralized HTTP client for all API calls to the Django backend
  */
 
@@ -41,7 +41,7 @@ const API = (() => {
 
     if (!res.ok) {
       clearTokens();
-      window.location.href = '/frontend/pages/login.html';
+      window.location.href = 'login.html';
       throw new Error('Session expired');
     }
 
@@ -78,7 +78,7 @@ const API = (() => {
         res = await fetch(url, { method, headers, body: opts.body });
       } catch {
         clearTokens();
-        window.location.href = '/frontend/pages/login.html';
+        window.location.href = 'login.html';
         throw new Error('Session expired');
       }
     }

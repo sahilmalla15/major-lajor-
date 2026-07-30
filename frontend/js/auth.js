@@ -1,5 +1,5 @@
 /**
- * AtelierAI — Auth Helpers
+ * Atelier — Auth Helpers
  * Handles login/register/logout flows and user state
  */
 
@@ -66,12 +66,12 @@ const Auth = (() => {
 
   async function logout() {
     API.clearTokens();
-    window.location.href = '/frontend/pages/login.html';
+    window.location.href = 'login.html';
   }
 
   function redirectIfNotLoggedIn() {
     if (!isLoggedIn()) {
-      window.location.href = '/frontend/pages/login.html';
+      window.location.href = 'login.html';
       return false;
     }
     return true;
@@ -79,7 +79,7 @@ const Auth = (() => {
 
   function redirectIfLoggedIn() {
     if (isLoggedIn()) {
-      window.location.href = '/frontend/pages/dashboard.html';
+      window.location.href = 'dashboard.html';
       return true;
     }
     return false;
@@ -97,7 +97,7 @@ const Auth = (() => {
       if (navUser) {
         const initial = (user.username || user.user?.username || 'U')[0].toUpperCase();
         navUser.innerHTML = `
-          <a href="/frontend/pages/profile.html" class="nav-avatar">
+          <a href="profile.html" class="nav-avatar">
             <div class="nav-avatar-placeholder">${initial}</div>
           </a>
           <button class="btn btn-ghost btn-sm" onclick="Auth.logout()">Logout</button>
@@ -105,22 +105,22 @@ const Auth = (() => {
       }
       if (navLinks) {
         navLinks.innerHTML = `
-          <a href="/frontend/pages/dashboard.html">Dashboard</a>
-          <a href="/frontend/pages/mentor.html">AI Mentor</a>
-          <a href="/frontend/pages/drawing-lab.html">Drawing Lab</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="mentor.html">AI Mentor</a>
+          <a href="drawing-lab.html">Drawing Lab</a>
         `;
       }
     } else {
       if (navUser) {
         navUser.innerHTML = `
-          <a href="/frontend/pages/login.html" class="btn btn-ghost btn-sm">Sign In</a>
-          <a href="/frontend/pages/register.html" class="btn btn-primary btn-sm">Get Started</a>
+          <a href="login.html" class="btn btn-ghost btn-sm">Sign In</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
         `;
       }
       if (navLinks) {
         navLinks.innerHTML = `
-          <a href="/frontend/index.html">Home</a>
-          <a href="#features">Features</a>
+          <a href="login.html">Sign In</a>
+          <a href="register.html">Register</a>
         `;
       }
     }

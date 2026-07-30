@@ -1,5 +1,5 @@
 /**
- * AtelierAI — Canvas Drawing Engine
+ * Atelier — Canvas Drawing Engine
  * Animation player for step-by-step drawing demonstrations
  * + Free-draw canvas with tools
  */

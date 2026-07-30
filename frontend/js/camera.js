@@ -1,5 +1,5 @@
 /**
- * AtelierAI — Camera Capture Module
+ * Atelier — Camera Capture Module
  * Handles device camera access via MediaDevices API
  */
 

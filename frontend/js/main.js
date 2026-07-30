@@ -1,5 +1,5 @@
 /**
- * AtelierAI — Common UI Utilities
+ * Atelier — Common UI Utilities
  * Toast notifications, loading states, modals, helpers
  */
 
@@ -221,3 +221,17 @@ const UI = (() => {
     debounce,
   };
 })();
+
+// Global password toggle helper
+function togglePassword(inputId, btn) {
+  var input = document.getElementById(inputId);
+  if (!input) return;
+  var icon = btn.querySelector('i');
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (icon) icon.className = 'fas fa-eye-slash';
+  } else {
+    input.type = 'password';
+    if (icon) icon.className = 'fas fa-eye';
+  }
+}

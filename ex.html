@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AtelierAI — Practice Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-cream: #FDF6ED;
+      --bg-card: #FFFFFF;
+      --text-primary: #2C2420;
+      --text-muted: #8C7B6B;
+      --accent-rust: #C75B3B;
+      --accent-rust-hover: #B04D30;
+      --accent-sage: #7A9E7E;
+      --accent-sage-hover: #6A8E6E;
+      --accent-salmon: #E8A598;
+      --accent-lavender: #EDE8F5;
+      --tag-bg: #F5F0E8;
+      --border: #E5DDD3;
+      --shadow: 0 2px 8px rgba(44, 36, 32, 0.06);
+      --radius: 14px;
+      --radius-sm: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Utility for screen-reader only */
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+
+    /* Top Navigation */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 64px;
+      background: var(--bg-cream);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav-left, .nav-right { display: flex; align-items: center; gap: 32px; }
+
+    .brand {
+      display: flex; align-items: baseline; gap: 8px; text-decoration: none; color: inherit;
+    }
+    .brand-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary);
+    }
+    .brand-tagline {
+      font-size: 11px; color: var(--accent-rust); font-weight: 500; letter-spacing: 0.5px; text-transform: lowercase;
+    }
+
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500;
+      padding: 4px 0; position: relative; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a.active {
+      color: var(--accent-rust);
+    }
+    .nav-links a.active::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px;
+      background: var(--accent-rust); border-radius: 2px;
+    }
+
+    .user-profile {
+      display: flex; align-items: center; gap: 10px;
+      padding: 6px 14px 6px 6px; border: 1px solid var(--border); border-radius: 999px;
+      background: var(--bg-card); cursor: pointer; transition: box-shadow 0.2s;
+    }
+    .user-profile:hover { box-shadow: var(--shadow); }
+    .avatar {
+      width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
+    }
+    .user-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+
+    /* Layout */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      max-width: 1400px;
+      margin: 0 auto;
+      min-height: calc(100vh - 64px);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      padding: 28px 20px;
+      border-right: 1px solid var(--border);
+    }
+
+    .back-to-desk {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: var(--radius-sm);
+      background: var(--accent-sage); color: #fff; font-size: 12px; font-weight: 600;
+      text-decoration: none; margin-bottom: 24px; letter-spacing: 0.3px;
+    }
+
+    .filter-section + .filter-section { margin-top: 28px; padding-top: 28px; border-top: 1px dashed var(--border); }
+
+    .filter-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 18px; font-weight: 700; margin-bottom: 16px;
+    }
+
+    .filter-label {
+      font-size: 11px; font-weight: 600; color: var(--accent-rust);
+      text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px;
+    }
+
+    .filter-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .filter-list button {
+      width: 100%; text-align: left; padding: 10px 14px; border-radius: var(--radius-sm);
+      border: none; background: transparent; color: var(--text-muted); font-size: 13px;
+      font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 8px;
+      transition: all 0.15s;
+    }
+    .filter-list button:hover { background: rgba(0,0,0,0.03); color: var(--text-primary); }
+    .filter-list button.active {
+      background: var(--accent-lavender); color: var(--text-primary); font-weight: 600;
+    }
+
+    .difficulty-btn .pencils { display: flex; gap: 3px; }
+    .pencil-icon {
+      width: 14px; height: 14px;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 32px 40px;
+    }
+
+    .page-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px;
+    }
+    .page-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 32px; font-weight: 700; color: var(--text-primary);
+    }
+
+    .header-widgets {
+      display: flex; align-items: center; gap: 16px;
+    }
+
+    .sketch-meter {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 10px 16px; min-width: 200px;
+    }
+    .sketch-meter-label {
+      display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; margin-bottom: 6px;
+    }
+    .sketch-meter-label span:first-child { color: var(--text-primary); }
+    .sketch-meter-label span:last-child { color: var(--text-muted); font-weight: 500; }
+    .meter-track {
+      height: 8px; background: #EFE8DE; border-radius: 999px; overflow: hidden;
+    }
+    .meter-fill {
+      height: 100%; width: 66%; background: var(--accent-sage); border-radius: 999px;
+    }
+
+    .streak-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 10px 16px; font-size: 14px; font-weight: 700; color: var(--accent-rust);
+    }
+
+    /* Section titles */
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px; font-weight: 700; margin-bottom: 18px;
+    }
+
+    /* Featured Card */
+    .featured-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; display: flex; gap: 24px; margin-bottom: 36px;
+      box-shadow: var(--shadow);
+    }
+    .featured-image {
+      width: 220px; height: 160px; object-fit: cover; border-radius: var(--radius-sm);
+      border: 1px solid var(--border); flex-shrink: 0;
+    }
+    .featured-content { flex: 1; display: flex; flex-direction: column; }
+    .featured-meta {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;
+    }
+    .badge-must-do {
+      background: var(--accent-salmon); color: #fff; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.6px; padding: 4px 10px; border-radius: 6px;
+    }
+    .featured-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px; font-weight: 700; margin-bottom: 8px;
+    }
+    .featured-desc {
+      font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; max-width: 640px;
+    }
+    .featured-footer {
+      margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .tag-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag {
+      padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border);
+      background: transparent; color: var(--text-muted); font-size: 12px; font-weight: 500;
+    }
+    .meta-group { display: flex; align-items: center; gap: 16px; }
+    .meta-item {
+      display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-muted); font-weight: 500;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 22px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600;
+      border: none; cursor: pointer; transition: all 0.2s; text-decoration: none;
+    }
+    .btn-primary { background: var(--accent-rust); color: #fff; }
+    .btn-primary:hover { background: var(--accent-rust-hover); }
+    .btn-secondary { background: var(--accent-sage); color: #fff; }
+    .btn-secondary:hover { background: var(--accent-sage-hover); }
+    .btn-ghost { background: #fff; color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: var(--tag-bg); }
+
+    /* Study List Grid */
+    .study-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;
+    }
+
+    .study-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .study-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 36, 32, 0.08); }
+
+    .card-image-wrap { position: relative; height: 180px; overflow: hidden; }
+    .card-image { width: 100%; height: 100%; object-fit: cover; }
+    .stamp {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(122, 158, 126, 0.95); color: #fff; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 10px; border-radius: 6px;
+      transform: rotate(-4deg); box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .card-body { padding: 18px; display: flex; flex-direction: column; flex: 1; }
+    .card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 18px; font-weight: 700; margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; flex: 1;
+    }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; } /* In a real app, you'd use a drawer */
+      .featured-card { flex-direction: column; }
+      .featured-image { width: 100%; height: 200px; }
+    }
+    @media (max-width: 640px) {
+      .top-nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .main { padding: 24px 20px; }
+      .page-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .study-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav" aria-label="Primary">
+    <div class="nav-left">
+      <a href="#" class="brand">
+        <span class="brand-name">AtelierAI</span>
+        <span class="brand-tagline">your sketchbook mentor</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#">My Roadmap</a></li>
+        <li><a href="#">AI Mentor</a></li>
+        <li><a href="#">Resource Library</a></li>
+        <li><a href="#" class="active" aria-current="page">Practice Board</a></li>
+        <li><a href="#">Progress Journal</a></li>
+      </ul>
+    </div>
+    <div class="nav-right">
+      <button class="user-profile" aria-label="Clara's profile menu">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="" class="avatar" />
+        <span class="user-name">Clara's Studio</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Filters">
+      <a href="#" class="back-to-desk">← To Desk</a>
+
+      <div class="filter-section">
+        <h2 class="filter-title">Filter Studio</h2>
+        <p class="filter-label">Select Topic</p>
+        <ul class="filter-list">
+          <li><button class="active" aria-pressed="true">All Exercises</button></li>
+          <li><button aria-pressed="false">Perspective Land</button></li>
+          <li><button aria-pressed="false">Anatomy Temple</button></li>
+          <li><button aria-pressed="false">Spherics & Shade</button></li>
+          <li><button aria-pressed="false">Composition Rules</button></li>
+        </ul>
+      </div>
+
+      <div class="filter-section">
+        <p class="filter-label">Difficulty</p>
+        <ul class="filter-list">
+          <li>
+            <button class="difficulty-btn" aria-pressed="false">
+              <span class="pencils" aria-hidden="true">
+                <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+              </span>
+              1 Pencil (Doodler)
+            </button>
+          </li>
+          <li>
+            <button class="difficulty-btn" aria-pressed="false">
+              <span class="pencils" aria-hidden="true">
+                <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+              </span>
+              2 Pencils (Sketcher)
+            </button>
+          </li>
+          <li>
+            <button class="difficulty-btn" aria-pressed="false">
+              <span class="pencils" aria-hidden="true">
+                <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+              </span>
+              3 Pencils (Atelier Pro)
+            </button>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="page-header">
+        <h1 class="page-title">Your Custom Practice Palette</h1>
+        <div class="header-widgets">
+          <div class="sketch-meter" aria-label="Daily sketch progress">
+            <div class="sketch-meter-label">
+              <span>Daily Sketch Meter</span>
+              <span>2/3 Drawn</span>
+            </div>
+            <div class="meter-track">
+              <div class="meter-fill" style="width: 66%"></div>
+            </div>
+          </div>
+          <div class="streak-badge" aria-label="12 day streak">
+            <span aria-hidden="true">🔥</span>
+            <span>12 Day</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Assignment -->
+      <section aria-labelledby="today-heading">
+        <h2 id="today-heading" class="section-title">Today's Curated Assignment</h2>
+        <article class="featured-card">
+          <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=400&fit=crop" alt="Perspective boxes sketch exercise" class="featured-image" />
+          <div class="featured-content">
+            <div class="featured-meta">
+              <span class="badge-must-do">Must Do</span>
+            </div>
+            <h3 class="featured-title">Horizon & Point Placement</h3>
+            <p class="featured-desc">
+              Doodle 10 perspective boxes on the horizon. Learn how vanishing points attract lines and anchor solid shapes in empty sheets. Focus on consistent weight and non-shaky line strokes.
+            </p>
+            <div class="featured-footer">
+              <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                <div class="tag-group">
+                  <span class="tag">Perspective</span>
+                  <span class="tag">Hand-eye coord</span>
+                </div>
+                <div class="meta-group">
+                  <span class="meta-item" aria-label="1 pencil difficulty">
+                    <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                  </span>
+                  <span class="meta-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    15 min
+                  </span>
+                </div>
+              </div>
+              <button class="btn btn-primary">Start Sketching</button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- Recommended Study List -->
+      <section aria-labelledby="study-heading">
+        <h2 id="study-heading" class="section-title">Recommended Study List</h2>
+        <div class="study-grid">
+          <!-- Card 1 -->
+          <article class="study-card">
+            <div class="card-image-wrap">
+              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop" alt="Hand anatomy construction sketches" class="card-image" />
+              <span class="stamp">Passed Approved!</span>
+            </div>
+            <div class="card-body">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+                <h3 class="card-title">Anatomy: Hand Construction</h3>
+                <span aria-label="3 pencil difficulty" style="display:flex; gap:2px;">
+                  <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                  <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                  <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                </span>
+              </div>
+              <p class="card-desc">
+                Break down hand geometry into mittens and primitive block wedges. Overcome drawing phobia.
+              </p>
+              <div class="card-footer">
+                <span class="meta-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  45 mins
+                </span>
+                <button class="btn btn-secondary">Review Feedback</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="study-card">
+            <div class="card-image-wrap">
+              <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&h=400&fit=crop" alt="Sphere shading light grading study" class="card-image" />
+            </div>
+            <div class="card-body">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+                <h3 class="card-title">Spherics: Light Grading</h3>
+                <span aria-label="2 pencil difficulty" style="display:flex; gap:2px;">
+                  <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                  <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                </span>
+              </div>
+              <p class="card-desc">
+                Create dynamic gradients using 2B graphite blocks. Master the core shadow and cast reflection.
+              </p>
+              <div class="card-footer">
+                <span class="meta-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  20 mins
+                </span>
+                <button class="btn btn-ghost">Mark Done</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Simple filter interaction for demo purposes
+    const filterButtons = document.querySelectorAll('.filter-list button');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Only one active per list
+        const list = btn.closest('ul');
+        list.querySelectorAll('button').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+      });
+    });
+  </script>
+</body>
+</html>

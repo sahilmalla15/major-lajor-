@@ -61,4 +61,28 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Create Account';
         }
     });
+
+    // Password visibility toggles
+    document.getElementById('togglePassword')?.addEventListener('click', function() {
+        var input = document.getElementById('password');
+        var icon = this.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            input.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    });
+    document.getElementById('toggleConfirmPassword')?.addEventListener('click', function() {
+        var input = document.getElementById('confirmPassword');
+        var icon = this.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            input.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    });
 });
