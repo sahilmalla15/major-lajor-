@@ -117,10 +117,6 @@ python -m http.server 5500
 ```
 Then visit `http://localhost:5500/pages/login.html`
 
-### Demo Credentials
-- **Admin**: admin / admin123
-- **Demo User**: demo / demo123
-
 ## 📡 API Endpoints
 
 | Endpoint | Method | Description |
