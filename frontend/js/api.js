@@ -171,6 +171,9 @@ const API = (() => {
     getActivity: () =>
       request('GET', '/progress/activity/'),
 
+    recordActivity: (data) =>
+      request('POST', '/progress/activity/record/', data),
+
     getAchievements: () =>
       request('GET', '/progress/achievements/'),
 

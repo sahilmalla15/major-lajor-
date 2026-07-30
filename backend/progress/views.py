@@ -29,6 +29,33 @@ class AchievementListView(generics.ListAPIView):
     def get_queryset(self):
         return Achievement.objects.filter(user=self.request.user)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def record_activity(request):
+    activity_type = request.data.get('type') or request.data.get('activity_type')
+    description = request.data.get('description') or request.data.get('lesson_title', '')
+
+    if not activity_type:
+        return Response({'error': 'activity_type is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    activity = ActivityLog.objects.create(
+        user=request.user,
+        activity_type=activity_type,
+        description=description
+    )
+
+    # Update user stats
+    stats, _ = UserStats.objects.get_or_create(user=request.user)
+    if activity_type == 'lesson_complete':
+        stats.total_lessons_completed += 1
+    elif activity_type == 'exercise_done':
+        stats.total_exercises_done += 1
+    elif activity_type == 'mentor_query':
+        stats.total_mentor_queries += 1
+    stats.save()
+
+    return Response(ActivityLogSerializer(activity).data, status=status.HTTP_201_CREATED)
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def dashboard_view(request):
