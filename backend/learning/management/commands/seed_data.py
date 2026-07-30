@@ -1174,33 +1174,33 @@ class Command(BaseCommand):
         else:
             self._skip("Admin user already exists")
 
-        # Demo regular user
+        # Demo regular user — sahil / sahil123
         demo_user, created = User.objects.get_or_create(
-            username="demo",
+            username="sahil",
             defaults={
-                "email": "demo@atelierai.com",
+                "email": "sahil@atelier.com",
             },
         )
         if created:
-            demo_user.set_password("demo123")
+            demo_user.set_password("sahil123")
             demo_user.save()
-            self._info("Created demo user")
+            self._info("Created demo user (sahil)")
         else:
-            self._skip("Demo user already exists")
+            self._skip("Demo user already exists (sahil)")
 
         # UserProfile (get_or_create in case it was missed on a prior run)
         _, profile_created = UserProfile.objects.get_or_create(
             user=demo_user,
             defaults={
-                "skill_level": "beginner",
-                "interests": ["perspective", "shading"],
-                "artistic_goals": "I want to learn drawing fundamentals",
+                "skill_level": "intermediate",
+                "interests": ["perspective", "shading", "anatomy"],
+                "artistic_goals": "I want to master drawing and painting",
             },
         )
         if profile_created:
-            self._info("Created user profile for demo user")
+            self._info(f"Created user profile for {demo_user.username}")
         else:
-            self._skip("User profile for demo user already exists")
+            self._skip(f"User profile for {demo_user.username} already exists")
 
         # UserStats (get_or_create in case it was missed on a prior run)
         _, stats_created = ProgressUserStats.objects.get_or_create(
@@ -1215,6 +1215,6 @@ class Command(BaseCommand):
             },
         )
         if stats_created:
-            self._info("Created user stats for demo user")
+            self._info(f"Created user stats for {demo_user.username}")
         else:
-            self._skip("User stats for demo user already exists")
+            self._skip(f"User stats for {demo_user.username} already exists")
